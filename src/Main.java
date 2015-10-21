@@ -15,6 +15,7 @@ public class Main {
 
         System.out.print("Enter weight: ");
         double w = in.nextDouble();
+        in.nextLine();
 
         Post weightedPost = new WeightPostDecorator(post1, w);
 
