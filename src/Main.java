@@ -25,6 +25,10 @@ public class Main {
         Post countryPost = new CountryPostDecorator(weightedPost, c);
         countryPost.create();
 
+        Subject subject = new Subject();
+        new ObserverPost(subject);
+
+        subject.setState(true);
 
        //post1.create();
 
