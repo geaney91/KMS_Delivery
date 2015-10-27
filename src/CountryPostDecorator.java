@@ -4,24 +4,22 @@
 public class CountryPostDecorator extends PostDecorator {
 
     private String country = "";
-    public CountryPostDecorator(Post decoratedPost, String country){
-        super(decoratedPost);
+    public CountryPostDecorator(Post weightedPost, String country){
+        super(weightedPost);
         this.country = country;
     }
 
-    public String getCountry()
-    {
-        return this.country;
-    }
+
 
     @Override
     public void create(){
         decoratedPost.create();
-        setPostCountry(this.country);
     }
 
-    public void setPostCountry(String c)
+
+    public String toString()
     {
-        System.out.print(c);
+        return this.country + decoratedPost;
+
     }
 }

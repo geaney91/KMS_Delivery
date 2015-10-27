@@ -5,13 +5,20 @@ public class Main {
         PostFactory postFactory = new PostFactory();
         Scanner in = new Scanner(System.in);
 
+        System.out.print("Enter username:");
+        String name = in.nextLine();
+        System.out.print("Enter password:");
+        String pass = in.nextLine();
+
+
+
         System.out.print("Enter type of Post: ");
         String post = in.nextLine();
 
         //double w = 2.3;
 
         Post post1 = postFactory.getPost(post);
-       // post1.create();
+        //post1.create();
 
         System.out.print("Enter weight: ");
         double w = in.nextDouble();
@@ -25,15 +32,17 @@ public class Main {
 
         Post countryPost = new CountryPostDecorator(weightedPost, c);
         countryPost.create();
-
         Subject subject = new Subject();
         new ObserverPost(subject);
 
-        subject.setState(true);
+        //subject.setState(true);
+        System.out.print(countryPost.toString());
+
+        String vb = countryPost.toString();
 
        //post1.create();
-
-        //System.out.print("You have selected " + post + " of " + weightedPost.getWeight() + "kg");
+        // System.out.print("You have selected " + post + " of " + weightedPost.getWeight() + "kg");
 
     }
+
 }
