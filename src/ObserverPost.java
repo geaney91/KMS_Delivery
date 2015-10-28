@@ -1,6 +1,4 @@
-/**
- * Created by 09006819 on 22/10/2015.
- */
+
 public class ObserverPost extends Observer {
     public ObserverPost(Subject subject){
         this.subject = subject;

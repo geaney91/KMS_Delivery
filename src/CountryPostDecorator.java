@@ -1,12 +1,22 @@
-/**
- * Created by 12154008 on 20/10/2015.
- */
+
 public class CountryPostDecorator extends PostDecorator {
 
-    private String country = "";
-    public CountryPostDecorator(Post weightedPost, String country){
-        super(weightedPost);
-        this.country = country;
+    public CountryPostDecorator(Post post1, String country){
+        super(post1);
+        if (country.equalsIgnoreCase("ireland"))
+        {
+            this.price = 1;
+
+        }
+        else if (country.equalsIgnoreCase("uk"))
+        {
+            this.price = 2;
+        }
+        else if (country.equalsIgnoreCase("europe"))
+        {
+            this.price = 3;
+        }
+
     }
 
 
@@ -14,12 +24,13 @@ public class CountryPostDecorator extends PostDecorator {
     @Override
     public void create(){
         decoratedPost.create();
-    }
-
-
-    public String toString()
-    {
-        return this.country + decoratedPost;
 
     }
+
+
+    //public String toString()
+    //{
+        //return this.country + decoratedPost;
+
+    //}
 }
