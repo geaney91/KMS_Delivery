@@ -1,15 +1,15 @@
 import java.util.*;
 public class WeightPostDecorator extends PostDecorator {
 
-    private double weight = 0.0;
-   public WeightPostDecorator(Post post1, double w) {
-       super(post1);
-       this.weight = w;
+   public WeightPostDecorator(Post countryPost, double w) {
+       super(countryPost);
+       this.price = w/2;
    }
 
     @Override
     public void create(){
         decoratedPost.create();
+
         //setPostWeight(/*decoratedPost*/this.weight);
     }
 
@@ -17,9 +17,9 @@ public class WeightPostDecorator extends PostDecorator {
        // weight = w;
     //}
 
-    public String toString()
-    {
-        String s = String.valueOf(this.weight);
-        return s;
-    }
+    //public String toString()
+    //{
+     //   String s = String.valueOf(this.weight);
+     //   return s;
+    //}
 }

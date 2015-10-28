@@ -1,13 +1,16 @@
 
-public class Package implements Post{
-    private String type = "";
-    private double weight = 0.0;
-    private String country = "";
-    private String delivery = "";
+public class Package extends Post{
+    private double price = 5.0;
+
+    @Override
+    public double GetPrice()
+    {
+        return price;
+    }
 
     @Override
     public void create(){
-        System.out.print("Package created");
+
     }
 
 }

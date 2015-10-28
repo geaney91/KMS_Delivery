@@ -1,8 +1,17 @@
-public class Letter implements Post {
+public class Letter extends Post {
+
+    private double price = 1.0;
+
+    @Override
+    public double GetPrice()
+    {
+        return price;
+    }
 
     @Override
     public void create(){
-        /*System.out.print("Letter created");*/
+
     }
+
 
 }

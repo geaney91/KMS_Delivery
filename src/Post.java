@@ -1,5 +1,7 @@
 
-public interface Post {
+public abstract class Post {
 
-    void create();
+    public abstract double GetPrice();
+
+    abstract void create();
 }

@@ -1,6 +1,6 @@
-public abstract class PostDecorator implements Post {
-    protected Post decoratedPost;
-
+public abstract class PostDecorator extends Post {
+    protected Post decoratedPost = null;
+    protected double price = 0.0;
 
     public PostDecorator(Post decoratedPost)
     {
@@ -11,5 +11,11 @@ public abstract class PostDecorator implements Post {
     {
         decoratedPost.create();
     }
+
+    public double GetPrice()
+    {
+        return price + decoratedPost.GetPrice();
+    }
+
 
 }
