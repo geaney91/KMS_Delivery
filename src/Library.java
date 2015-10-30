@@ -1,13 +1,22 @@
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 public class Library
 {
+    private static ArrayList<String> loginList = new ArrayList<>();
+    private static ArrayList<String> trackingList = new ArrayList<>();
 
-    public Library()
+    public Library() {}
+
+    public ArrayList<String> getLoginList()
     {
+        return loginList;
     }
-
-    Scanner in = new Scanner(System.in);
+    public ArrayList<String> getTrackingList()
+    {
+        return trackingList;
+    }
 
     public void writeFile(String user, String pass) throws IOException
     {
@@ -18,15 +27,19 @@ public class Library
         out.close();
     }
 
-    public void writeFile(String user, int id, Date deliveryDate) throws IOException
+    public void writeFile(String user, int id, String deliveryDate) throws IOException
     {
+        String dt = "";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         Date sent = new Date();
+        dateFormat.format(sent);
         Calendar c = Calendar.getInstance();
         c.setTime(sent);
+        dt = dateFormat.format(c.getTime());
         int range = (259);
         int letterId = (int)(Math.random() * range);
         PrintWriter out = new PrintWriter(new FileWriter("./src/PostTracking.txt",true));
-        out.println(user + "," + id + IntToLetter(letterId) + "," + sent + "," + deliveryDate);
+        out.println(user + "," + id + IntToLetter(letterId) + "," + dt + "," + deliveryDate);
         out.close();
     }
 
@@ -42,6 +55,28 @@ public class Library
             }
         }
 
+    }
+
+    public ArrayList<String> readLoginDetails() throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader("./src/Users.txt"));
+        String line = "";
+        while ((line = br.readLine()) != null)
+        {
+            loginList.add(line);
         }
+        return loginList;
+    }
+
+    public ArrayList<String> readTrackingDetails() throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader("./src/PostTracking.txt"));
+        String line = "";
+        while ((line = br.readLine()) != null)
+        {
+            trackingList.add(line);
+        }
+        return trackingList;
+    }
 
 }

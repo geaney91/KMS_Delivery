@@ -1,12 +1,20 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 public class DeliveryDate implements Strategy {
     @Override
-    public Date DisplayDate(String deliveryType, String country)
+    public String DisplayDate(String deliveryType, String country)
     {
+        String dt = "";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        //get current date time with Date()
         Date date = new Date();
+        dateFormat.format(date);
+
         Calendar c = Calendar.getInstance();
         c.setTime(date);
+
 
         switch (deliveryType.toLowerCase())
         {
@@ -53,7 +61,7 @@ public class DeliveryDate implements Strategy {
                 }
                 break;
         }
-        date = c.getTime();
-        return date;
+        dt = dateFormat.format(c.getTime());
+        return dt;
     }
 }

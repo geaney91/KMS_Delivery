@@ -1,3 +1,9 @@
+import javax.swing.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ObserverPost extends Observer {
     public ObserverPost(Subject subject){
@@ -6,7 +12,28 @@ public class ObserverPost extends Observer {
     }
 
     @Override
-    public void update() {
-        System.out.println( "Binary String: " +( subject.getState() ) );
+    public void update()
+    {
+        Date logIn = subject.getState();
+        Library library = new Library();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        ArrayList<String> local = library.getTrackingList();
+        for (int i = 0; i < local.size(); i++) {
+            String[] details = local.get(i).split(",");
+            try {
+                Date delivery = dateFormat.parse(details[3]);
+                long diff = delivery.getTime() - logIn.getTime();
+                if (diff < 0) {
+                    System.out.println("Post Id: " + details[1] + " has been delivered\n");
+                }
+                else
+                {
+                    System.out.println("Post Id: " + details[1] + " is due to be delivered on" + details[3]);
+                }
+                //TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+            } catch (ParseException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }
