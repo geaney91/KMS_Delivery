@@ -1,16 +1,17 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
 public class Subject {
     private List<Observer> observers = new ArrayList<Observer>();
-    private boolean state;
+    private Date state;
 
-    public boolean getState() {
+    public Date getState() {
         return state;
     }
 
-    public void setState(boolean state) {
+    public void setState(Date state) {
         this.state = state;
         notifyAllObservers();
     }

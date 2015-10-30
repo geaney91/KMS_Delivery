@@ -1,15 +1,26 @@
+import javax.swing.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.io.*;
+import java.util.concurrent.TimeUnit;
+
 public class Main {
+
+
     public static void main(String[]args) throws IOException
     {
+        Login log = new Login();
         Scanner in = new Scanner(System.in);
-        boolean check = Login();
+        Library lib = new Library();
+        lib.readLoginDetails();
+        lib.readTrackingDetails();
+        boolean check = log.LogUserIn();
         if (check == true)
         {
             System.out.println("Logged In");
             Details();
-
         }
         else
         {
@@ -18,22 +29,31 @@ public class Main {
                 System.out.println("User not found. Register or Log: ");
                 String start = in.nextLine();
                 if(start.equalsIgnoreCase("log"))
-                check = Login();
+                    check = log.LogUserIn();
                 else if(start.equalsIgnoreCase("register"))
                 {
-                    Register();
-                    Details();
+                    log.Register();
+                    check = log.LogUserIn();
+                    //Details();
                 }
                 else
                     System.exit(0);
-
             }
             Details();
-
         }
     }
 
     public static void Details() throws IOException {
+        Login log = new Login();
+        Library library = new Library();
+        Subject subject = new Subject();
+        Date logIn = new Date();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        dateFormat.format(logIn);
+
+        new ObserverPost(subject);
+        subject.setState(logIn);
+
         PostFactory postFactory = new PostFactory();
         Scanner in = new Scanner(System.in);
         System.out.print("Enter type of Post:(Letter, Parcel, Package) ");
@@ -44,7 +64,6 @@ public class Main {
         System.out.print("Enter destination to deliver to: (Ireland, UK, Europe) ");
         String c = in.nextLine();
         Post countryPost = new CountryPostDecorator(post1, c);
-
 
         System.out.print("Enter weight in kg: ");
         double w = in.nextDouble();
@@ -59,33 +78,27 @@ public class Main {
 
         Context context = new Context(new DeliveryDate());
         System.out.println(context.executeStrategy(delivery, c));
-        Date date = context.executeStrategy(delivery, c);
+        String date = context.executeStrategy(delivery, c);
 
-        Subject subject = new Subject();
-        new ObserverPost(subject);
 
-        Library library = new Library();
-        int id = 69;
-        String name = "JJ";
-        library.writeFile(name, id, date);
+
+        library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);
 
     }
 
-    public static boolean Login() throws IOException
+    /*public static boolean Login() throws IOException
     {
         Scanner in = new Scanner(System.in);
         System.out.print("Enter username:");
         String name = in.nextLine();
         System.out.print("Enter password:");
         String pass = in.nextLine();
-
-        BufferedReader br = new BufferedReader(new FileReader("./src/Users.txt"));
-        String line = "";
-        int count = 0;
+        Library library = new Library();
         boolean check = true;
-        while ((line = br.readLine()) != null)
+        ArrayList<String> localList = library.getLoginList();
+        for (int i = 0; i < localList.size(); i++)
         {
-            String [] details = line.split(",");
+            String [] details = localList.get(i).split(",");
             if (details[0].equals(name) && details[1].equals(pass))
             {
                 check = true;
@@ -110,6 +123,6 @@ public class Main {
         Library library = new Library();
         library.writeFile(name, pass);
         System.out.println("Registration successful");
-    }
+    }*/
 
 }
