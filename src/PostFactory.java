@@ -3,7 +3,7 @@ public class PostFactory {
         if(postType == null){
             return null;
         }
-        if(postType.equalsIgnoreCase("LETTER")){
+        if(postType.equalsIgnoreCase("Letter")){
             return new Letter();
         }
         else if(postType.equalsIgnoreCase("Package")) {

@@ -25,6 +25,7 @@ public class Library
         PrintWriter out = new PrintWriter( new BufferedWriter(new FileWriter("./src/Users.txt",true)));
         out.println(user + "," + pass + "," + id);
         out.close();
+        loginList = readLoginDetails();
     }
 
     public void writeFile(String user, int id, String deliveryDate) throws IOException
@@ -41,6 +42,7 @@ public class Library
         PrintWriter out = new PrintWriter(new FileWriter("./src/PostTracking.txt",true));
         out.println(user + "," + id + IntToLetter(letterId) + "," + dt + "," + deliveryDate);
         out.close();
+        trackingList = readTrackingDetails();
     }
 
     public static String IntToLetter(int Int)
