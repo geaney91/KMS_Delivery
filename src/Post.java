@@ -1,7 +1,7 @@
 
 public interface Post {
 
-    public double GetPrice();
+     double GetPrice();
 
-    public void create();
+     void create();
 }

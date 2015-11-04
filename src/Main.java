@@ -49,8 +49,15 @@ public class Main {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         dateFormat.format(logIn);
 
-      //  new ObserverPost(subject);
-      //  subject.setState(logIn);
+      /*
+      new ObserverPost(subject);
+      subject.setState(logIn);
+      */
+
+        ConcreteInterceptor concrete = new ConcreteInterceptor();
+        Dispatcher.register(concrete);
+
+
 
         System.out.println("\nWould you like to create post to send or track an item you have previously created: (create or track)");
         String choice = in.nextLine();

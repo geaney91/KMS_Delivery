@@ -1,4 +1,4 @@
-public class Letter implements Post {
+public class Letter implements Post  {
 
     private double price = 1.0;
 
