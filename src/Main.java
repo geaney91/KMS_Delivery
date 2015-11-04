@@ -56,6 +56,8 @@ public class Main {
 
         ConcreteInterceptor concrete = new ConcreteInterceptor();
         Dispatcher.register(concrete);
+        ConcreteFramework cf = new ConcreteFramework();
+        cf.event();
 
 
 
