@@ -108,7 +108,7 @@ public class Main {
                         if (send.equalsIgnoreCase("y"))
                         {
                             Context context = new Context(new DeliveryDate());
-                            System.out.println(context.executeStrategy(delivery, c));
+                            System.out.println("Delivery date: " + context.executeStrategy(delivery, c));
                             String date = context.executeStrategy(delivery, c);
                             library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);
                             System.out.println("Post sent!");
