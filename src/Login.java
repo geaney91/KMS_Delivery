@@ -3,9 +3,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 
-/**
- * Created by 09006819 on 30/10/2015.
- */
 public class Login {
 
     private static String currentUser = "";

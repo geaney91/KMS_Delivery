@@ -28,6 +28,21 @@ public class Library
         loginList = readLoginDetails();
     }
 
+    public void writeFile(String user) throws IOException
+    {
+        PrintWriter out = new PrintWriter( new BufferedWriter(new FileWriter("./src/Log.txt",true)));
+        String dt = "";
+        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        Date sent = new Date();
+        dateFormat.format(sent);
+        Calendar c = Calendar.getInstance();
+        c.setTime(sent);
+        dt = dateFormat.format(c.getTime());
+        out.println(user + ", " +  dt);
+        out.close();
+        loginList = readLoginDetails();
+    }
+
     public void writeFile(String user, int id, String deliveryDate) throws IOException
     {
         String dt = "";
