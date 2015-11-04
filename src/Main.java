@@ -49,8 +49,8 @@ public class Main {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         dateFormat.format(logIn);
 
-        new ObserverPost(subject);
-        subject.setState(logIn);
+      //  new ObserverPost(subject);
+      //  subject.setState(logIn);
 
         System.out.println("\nWould you like to create post to send or track an item you have previously created: (create or track)");
         String choice = in.nextLine();
@@ -60,7 +60,8 @@ public class Main {
         }
         else if (choice.toLowerCase().equals("track"))
         {
-
+            new ObserverPost(subject);
+            subject.setState(logIn);
         }
 
     }

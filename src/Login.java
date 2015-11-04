@@ -59,6 +59,7 @@ public class Login {
 
     public static void Register() throws IOException
     {
+
         Scanner in = new Scanner(System.in);
         System.out.print("Enter username:");
         String name = in.nextLine();

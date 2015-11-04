@@ -30,7 +30,7 @@ public class ObserverPost extends Observer {
                     if (diff < 0) {
                         System.out.println("Post Id: " + details[1] + " has been delivered\n");
                     } else {
-                        System.out.println("Post Id: " + details[1] + " is due to be delivered on" + details[3]);
+                        System.out.println("Post Id: " + details[1] + " is due to be delivered on " + details[3]);
                     }
                     //TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
                 } catch (ParseException e) {

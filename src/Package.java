@@ -1,5 +1,5 @@
 
-public class Package extends Post{
+public class Package implements Post{
     private double price = 5.0;
 
     @Override

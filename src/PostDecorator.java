@@ -1,4 +1,4 @@
-public abstract class PostDecorator extends Post {
+public abstract class PostDecorator implements Post {
     protected Post decoratedPost = null;
     protected double price = 0.0;
 
