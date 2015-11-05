@@ -61,6 +61,7 @@ public class Main {
 
         //schedule to run after sometime
         System.out.println("Current Time = "+new Date());
+        //change for loop to if statement to check if a change occurs if not recheck track
         for(int i=0; i<10; i++) {
             try
             {
