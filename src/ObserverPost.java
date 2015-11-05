@@ -28,6 +28,7 @@ public class ObserverPost extends Observer {
                     Date delivery = dateFormat.parse(details[3]);
                     long diff = delivery.getTime() - logIn.getTime();
                     if (diff < 0) {
+                        //JOptionPane.showMessageDialog (null, "Post Id:"+ details[1], " has been delivered",JOptionPane.INFORMATION_MESSAGE);
                         System.out.println("Post Id: " + details[1] + " has been delivered\n");
                     } else {
                         System.out.println("Post Id: " + details[1] + " is due to be delivered on " + details[3]);
