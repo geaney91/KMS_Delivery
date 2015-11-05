@@ -9,12 +9,11 @@ public class DeliveryDate implements Strategy {
         String dt = "";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         //get current date time with Date()
-        Date date = new Date();
-        dateFormat.format(date);
+       // Date date = new Date();
+        //dateFormat.format(date);
 
         Calendar c = Calendar.getInstance();
-        c.setTime(date);
-
+        //c.setTime(date);
 
         switch (deliveryType.toLowerCase())
         {

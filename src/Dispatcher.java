@@ -17,7 +17,6 @@ public class Dispatcher {
 
     void iterate_list(ContextInterceptor c1)
     {
-
         for(int i = 0; i< interceptors.size();i++)
         {
             interceptors.get(i).Log(c1);

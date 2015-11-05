@@ -1,6 +1,6 @@
 import java.io.IOException;
 
-public class ConcreteInterceptor implements Interceptor  {
+public class Logger implements Interceptor  {
 
     @Override
     public void Log(ContextInterceptor c1){

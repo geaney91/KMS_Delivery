@@ -62,16 +62,15 @@ public class Library
 
     public static String IntToLetter(int Int)
     {
-        if (Int<27){
+        if (Int<27)
             return Character.toString((char)(Int+96));
-        } else {
-            if (Int%26==0) {
+        else
+        {
+            if (Int%26==0)
                 return IntToLetter((Int/26)-1)+IntToLetter((Int%26)+1);
-            } else {
+            else
                 return IntToLetter(Int/26)+IntToLetter(Int%26);
-            }
         }
-
     }
 
     public ArrayList<String> readLoginDetails() throws IOException

@@ -5,69 +5,52 @@ import java.io.*;
 
 public class Main {
 
-
     public static void main(String[]args) throws IOException
     {
         Login log = new Login();
         Scanner in = new Scanner(System.in);
         Library lib = new Library();
-        lib.readLoginDetails();
-        lib.readTrackingDetails();
-        boolean check = log.LogUserIn();
-        if (check == true)
+        lib.readLoginDetails(); //Reads in the login details from Users.txt into an arrayList.
+        lib.readTrackingDetails();  //Reads in the tracking details from PostTracking.txt into an arrayList.
+        boolean check = log.LogUserIn(in, lib);    //Calls method to check if login was successful and returns true if it was.
+        while (check == false)  //Enters this loop if user enters incorrect/unknown login details.
         {
-            System.out.println("Logged In");
-            Options();
-        }
-        else
-        {
-            while (check == false)
+            System.out.println("User not found. Register or Log: ");
+            String start = in.nextLine();
+            if (start.equalsIgnoreCase("log"))
+                check = log.LogUserIn(in, lib);    //Recalls the login method to allow user to try to log in again.
+            else if (start.equalsIgnoreCase("register"))
             {
-                System.out.println("User not found. Register or Log: ");
-                String start = in.nextLine();
-                if(start.equalsIgnoreCase("log"))
-                    check = log.LogUserIn();
-                else if(start.equalsIgnoreCase("register"))
-                {
-                    log.Register();
-                    check = log.LogUserIn();
-                    //Options();
-                }
-                else
-                    System.exit(0);
+                log.Register(in, lib); //Calls the register method to allow a user to register their details.
+                check = log.LogUserIn(in, lib);    //The user must log in after registering.
             }
-            Options();
+            else
+                System.exit(0);
         }
+        System.out.println("Logged In");    //Once log in details are correct and recognised the user can enter the application.
+        Options(in, lib, log);
     }
 
-    public static void Options() throws IOException {
-        Scanner in = new Scanner(System.in);
-        Login log = new Login();
-        Library library = new Library();
+    //Called on successful login.
+    public static void Options(Scanner in, Library lib, Login log) throws IOException {
+
         Subject subject = new Subject();
         Date logIn = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         dateFormat.format(logIn);
 
-      /*
-      new ObserverPost(subject);
-      subject.setState(logIn);
-      */
-
-        ConcreteInterceptor concrete = new ConcreteInterceptor();
+        Logger concrete = new Logger();
         Dispatcher.register(concrete);
         ConcreteFramework cf = new ConcreteFramework();
         cf.event();
 
-
-
         System.out.println("\nWould you like to create post to send or track an item you have previously created: (create or track)");
         String choice = in.nextLine();
-        if (choice.toLowerCase().equals("create"))
+        if (choice.toLowerCase().equals("create"))  //Calls CreatePost method.
         {
-            CreatePost(in, library, log);
+            CreatePost(in, lib, log);
         }
-        else if (choice.toLowerCase().equals("track"))
+        else if (choice.toLowerCase().equals("track"))  //Updates current date in Subject to display post delivery status to user.
         {
             new ObserverPost(subject);
             subject.setState(logIn);
@@ -75,6 +58,7 @@ public class Main {
 
     }
 
+    //Called when user enters 'create'
     public static void CreatePost(Scanner in, Library library, Login log) throws IOException
     {
         PostFactory postFactory = new PostFactory();
@@ -149,44 +133,5 @@ public class Main {
         }
 
     }
-
-    /*public static boolean Login() throws IOException
-    {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter username:");
-        String name = in.nextLine();
-        System.out.print("Enter password:");
-        String pass = in.nextLine();
-        Library library = new Library();
-        boolean check = true;
-        ArrayList<String> localList = library.getLoginList();
-        for (int i = 0; i < localList.size(); i++)
-        {
-            String [] details = localList.get(i).split(",");
-            if (details[0].equals(name) && details[1].equals(pass))
-            {
-                check = true;
-                break;
-            }
-            else
-            {
-                check = false;
-            }
-        }
-
-        return check;
-
-    }
-    public static void Register() throws IOException
-    {
-        Scanner in = new Scanner(System.in);
-        System.out.print("Enter username:");
-        String name = in.nextLine();
-        System.out.print("Enter password:");
-        String pass = in.nextLine();
-        Library library = new Library();
-        library.writeFile(name, pass);
-        System.out.println("Registration successful");
-    }*/
 
 }

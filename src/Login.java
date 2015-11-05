@@ -17,21 +17,19 @@ public class Login {
     {
         return currentPass;
     }
-
     public int getCurrentId()
     {
         return currentId;
     }
 
 
-    public static boolean LogUserIn() throws IOException
+    public static boolean LogUserIn(Scanner in, Library library) throws IOException
     {
-        Scanner in = new Scanner(System.in);
         System.out.print("Enter username:");
         String name = in.nextLine();
         System.out.print("Enter password:");
         String pass = in.nextLine();
-        Library library = new Library();
+
         boolean check = false;
         ArrayList<String> localList = library.getLoginList();
         for (int i = 0; i < localList.size(); i++)
@@ -46,23 +44,18 @@ public class Login {
                 break;
             }
             else
-            {
                 check = false;
-            }
         }
-
         return check;
     }
 
-    public static void Register() throws IOException
+    public static void Register(Scanner in, Library library) throws IOException
     {
-
-        Scanner in = new Scanner(System.in);
         System.out.print("Enter username:");
         String name = in.nextLine();
         System.out.print("Enter password:");
         String pass = in.nextLine();
-        Library library = new Library();
+
         library.writeFile(name, pass);
         System.out.println("Registration successful\nPlease log in.");
     }
