@@ -3,10 +3,8 @@ import java.io.IOException;
 public class Logger implements Interceptor  {
 
     @Override
-    public void Log(ContextInterceptor c1){
-            //write to file
-
-        //c1 = new ContextInterceptor();
+    public void Log(LogInfo c1)
+    {
         String user = c1.getUser();
         //System.out.print(user);
         Library library = new Library();

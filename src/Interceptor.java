@@ -1,5 +1,5 @@
 
 public interface Interceptor {
 
-    void Log(ContextInterceptor c1);
+    void Log(LogInfo c1);
 }
