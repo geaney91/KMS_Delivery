@@ -66,26 +66,28 @@ public class Main {
         String post = in.nextLine();
         if (post.equalsIgnoreCase("letter") || post.equalsIgnoreCase("parcel") || post.equalsIgnoreCase("package"))
         {
-            Post post1 = postFactory.getPost(post);
+            Post post1 = postFactory.getPost(post); //Sends string to post factory which creates an object of that type
             System.out.print("Enter destination to deliver to: (Ireland, UK, Europe) ");
             String c = in.nextLine();
             if (c.equalsIgnoreCase("ireland") || c.equalsIgnoreCase("uk") || c.equalsIgnoreCase("europe"))
             {
-                Post countryPost = new CountryPostDecorator(post1, c);
+                Post countryPost = new CountryPostDecorator(post1, c);  //Decorates the object with chosen destination. Price is updated.
                 System.out.print("Enter weight in kg: (e.g 1.2) ");
                 String ws = in.nextLine();
                 if (ws.matches("-?\\d+(\\.\\d+)?") || ws.matches("\\d+"))
                 {
                     double w = Double.parseDouble(ws);
-                    Post weightedPost = new WeightPostDecorator(countryPost, w);
+                    Post weightedPost = new WeightPostDecorator(countryPost, w);    //Decorates object with weight. Price is updated.
 
                     System.out.print("Enter delivery type: (Standard, Express, Super)");
                     String delivery  = in.nextLine();
                     if (delivery.equalsIgnoreCase("standard") || delivery.equalsIgnoreCase("express") || delivery.equalsIgnoreCase("super"))
                     {
-                        Post deliveryPost = new DeliveryPostDecorator(weightedPost, delivery);
+                        Post deliveryPost = new DeliveryPostDecorator(weightedPost, delivery);  //Decorates object with delivery type. Price is updated.
 
-                        System.out.println("Postage Cost: " + deliveryPost.GetPrice());
+                        //System.out.println("Postage Cost: " + deliveryPost.GetPrice()); //Gets the total postage cost.
+                        CurrencyType currency = new Money();
+                        currency.accept(new CurrencyTypeDisplayVisitor(), deliveryPost.GetPrice());
 
                         System.out.println("Would you like to send this post: (y, n)");
                         String send = in.nextLine();
@@ -94,7 +96,7 @@ public class Main {
                             Context context = new Context(new DeliveryDate());
                             System.out.println("Delivery date: " + context.executeStrategy(delivery, c));
                             String date = context.executeStrategy(delivery, c);
-                            library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);
+                            library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
                             System.out.println("Post sent!");
                         }
                         else if (send.equalsIgnoreCase("n"))

@@ -52,7 +52,7 @@ public class Library
         Calendar c = Calendar.getInstance();
         c.setTime(sent);
         dt = dateFormat.format(c.getTime());
-        int range = (259);
+        int range = (1000);
         int letterId = (int)(Math.random() * range);
         PrintWriter out = new PrintWriter(new FileWriter("./src/PostTracking.txt",true));
         out.println(user + "," + id + IntToLetter(letterId) + "," + dt + "," + deliveryDate);
@@ -93,6 +93,17 @@ public class Library
             trackingList.add(line);
         }
         return trackingList;
+    }
+
+    public void CleanUp() throws IOException
+    {
+        BufferedReader br = new BufferedReader(new FileReader("./src/PostTracking.txt"));
+        String line = "";
+        while ((line = br.readLine()) != null)
+        {
+            String [] d = line.split(",");
+
+        }
     }
 
 }
