@@ -1,3 +1,5 @@
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -123,12 +125,30 @@ public class Main {
                             String date = context.executeStrategy(delivery, c);
                             library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
                             System.out.println("Post sent!");
-                            System.exit(0);
+                            Boolean check = ReturnToMenu(in);
+                            if (check)
+                                Options(in, library, log);
+                            else if (!check)
+                                System.exit(0);
+                            else
+                            {
+                                System.out.println("Invalid entry. System will exit.");
+                                System.exit(0);
+                            }
                         }
                         else if (send.equalsIgnoreCase("n"))
                         {
                             System.out.println("Post not sent");
-                            System.exit(0);
+                            Boolean check = ReturnToMenu(in);
+                            if (check)
+                                Options(in, library, log);
+                            else if (!check)
+                                System.exit(0);
+                            else
+                            {
+                                System.out.println("Invalid entry. System will exit.");
+                                System.exit(0);
+                            }
                         }
                         else
                         {
@@ -160,6 +180,24 @@ public class Main {
             CreatePost(in, library, log);
         }
 
+    }
+
+    public static boolean ReturnToMenu(Scanner in)
+    {
+        Boolean check = true;
+        System.out.println("Return to menu: (y or n)");
+        String result = in.nextLine();
+        if (result.equalsIgnoreCase("y"))
+        {
+            check = true;
+        }
+        else if (result.equalsIgnoreCase("n"))
+        {
+            check = false;
+        }
+        else
+            check = null;
+        return check;
     }
 
 }
