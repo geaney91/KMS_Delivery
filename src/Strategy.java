@@ -2,5 +2,5 @@
 
 public interface Strategy {
 
-    String DisplayDate(String deliveryType, String country);
+    String DisplayDate(String country);
 }

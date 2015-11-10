@@ -2,9 +2,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-public class DeliveryDate implements Strategy {
+public class DeliveryDateStandard implements Strategy {
     @Override
-    public String DisplayDate(String deliveryType, String country)
+    public String DisplayDate(String country)
     {
         String dt = "";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -15,7 +15,14 @@ public class DeliveryDate implements Strategy {
         Calendar c = Calendar.getInstance();
         //c.setTime(date);
 
-        switch (deliveryType.toLowerCase())
+        if(country.toLowerCase().equals("ireland"))
+            c.add(Calendar.DATE,2);
+        if(country.toLowerCase().equals("uk"))
+            c.add(Calendar.DATE,3);
+        if(country.toLowerCase().equals("europe"))
+            c.add(Calendar.DATE,5);
+
+    /*    switch (deliveryType.toLowerCase())
         {
             case "standard":
                 switch (country.toLowerCase())
@@ -59,7 +66,7 @@ public class DeliveryDate implements Strategy {
                         break;
                 }
                 break;
-        }
+        }*/
         dt = dateFormat.format(c.getTime());
         return dt;
     }
