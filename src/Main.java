@@ -1,3 +1,5 @@
+import com.sun.istack.internal.Nullable;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -5,6 +7,7 @@ import java.io.*;
 
 public class Main {
 
+    private static int count = 0;
     public static void main(String[]args) throws IOException
     {
         Login log = new Login();
@@ -43,10 +46,13 @@ public class Main {
         DeliveryStatusCheckThread ds1 = new DeliveryStatusCheckThread(observerSubject,logIn);
         ds1.start();
 
-        ILogger ILogger = new ILogger();
-        IDispatcher.register(ILogger);
-        IConcreteFramework cf = new IConcreteFramework();
-        cf.event();
+        if (count == 0) {
+            ILogger ILogger = new ILogger();
+            IDispatcher.register(ILogger);
+            IConcreteFramework cf = new IConcreteFramework();
+            cf.event();
+            count++;
+        }
 
         System.out.println("\nWould you like to create post to send or track an item you have previously created: (create or track)");
         String choice = in.nextLine();
@@ -58,10 +64,10 @@ public class Main {
         {
             new ObserverPost(observerSubject);
             observerSubject.setState(logIn);
-            Boolean check = ReturnToMenu(in);
-            if (check)
+            int check = ReturnToMenu(in);
+            if (check == 0)
                 Options(in, lib, log);
-            else if (!check)
+            else if (check == 1)
                 System.exit(0);
             else
             {
@@ -123,10 +129,10 @@ public class Main {
                         else if (send.equalsIgnoreCase("n"))
                         {
                             System.out.println("Post not sent");
-                            Boolean check = ReturnToMenu(in);
-                            if (check)
+                            int check = ReturnToMenu(in);
+                            if (check == 0)
                                 Options(in, library, log);
-                            else if (!check)
+                            else if (check == 1)
                                 System.exit(0);
                             else
                             {
@@ -173,32 +179,40 @@ public class Main {
         String date = strategyContext.executeStrategy(c);
         library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
         System.out.println("Post sent!");
-        Boolean check = ReturnToMenu(in);
-        if (check)
+        int check = ReturnToMenu(in);
+        if (check == 0)
             Options(in, library, log);
-        else if (!check)
-            System.exit(0);
-        else {
-            System.out.println("Invalid entry. System will exit.");
+        else if (check == 1)
+        {
+            System.out.println("System will exit.");
             System.exit(0);
         }
+        else
+        {
+            System.out.println("Invalid Entry. System will exit.");
+            System.exit(0);
+        }
+
     }
 
-    public static boolean ReturnToMenu(Scanner in)
+    public static int ReturnToMenu(Scanner in)
     {
-        Boolean check = true;
+
+        int check = 0;
         System.out.println("Return to menu: (y or n)");
         String result = in.nextLine();
         if (result.equalsIgnoreCase("y"))
         {
-            check = true;
+            check = 0;
         }
         else if (result.equalsIgnoreCase("n"))
         {
-            check = false;
+            check = 1;
         }
         else
-            check = null;
+        {
+            check = 2;
+        }
         return check;
     }
 }

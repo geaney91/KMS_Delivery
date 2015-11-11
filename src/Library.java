@@ -33,14 +33,14 @@ public class Library
         PrintWriter out = new PrintWriter( new BufferedWriter(new FileWriter("./src/Log.txt",true)));
         String dt = "";
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        Date sent = new Date();
-        dateFormat.format(sent);
+        Date loggedIn = new Date();
+        dateFormat.format(loggedIn);
         Calendar c = Calendar.getInstance();
-        c.setTime(sent);
+        c.setTime(loggedIn);
         dt = dateFormat.format(c.getTime());
         out.println(user + ", " +  dt);
         out.close();
-        loginList = readLoginDetails();
+        //loginList = readLoginDetails();
     }
 
     public void writeFile(String user, int id, String deliveryDate) throws IOException
