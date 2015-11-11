@@ -1,5 +1,6 @@
 
 public abstract class Observer {
-    protected Subject subject;
+
+    protected ObserverSubject observerSubject;
     public abstract void update();
 }

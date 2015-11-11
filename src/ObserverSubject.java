@@ -3,8 +3,8 @@ import java.util.Date;
 import java.util.List;
 
 
-public class Subject {
-    private List<Observer> observers = new ArrayList<Observer>();
+public class ObserverSubject {
+    private List<Observer> observers = new ArrayList<>();
     private Date state;
 
     public Date getState() {

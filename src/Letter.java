@@ -8,10 +8,4 @@ public class Letter implements Post  {
         return price;
     }
 
-    @Override
-    public void create(){
-
-    }
-
-
 }

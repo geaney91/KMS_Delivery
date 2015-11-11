@@ -35,7 +35,7 @@ public class Login {
         for (int i = 0; i < localList.size(); i++)
         {
             String [] details = localList.get(i).split(",");
-            if (details[0].equals(name) && details[1].equals(pass))
+            if (details[0].equals(name) && details[1].equals(pass)) //If valid user.
             {
                 currentUser = details[0];
                 currentPass = details[1];
@@ -57,7 +57,7 @@ public class Login {
         String pass = in.nextLine();
         ArrayList<String> localList = library.getLoginList();
         boolean check = true;
-        if (name.isEmpty() || pass.isEmpty())
+        if (name.isEmpty() || pass.isEmpty())   //If no username & password entered.
         {
             System.out.println("Can't be blank. Enter different username and password");
             Register(in, library);
@@ -66,14 +66,15 @@ public class Login {
         for (int i = 0; i < localList.size() && check; i++)
         {
             String[] details = localList.get(i).split(",");
-            if (details[0].equals(name) && details[1].equals(pass))
+            if (details[0].equals(name) && details[1].equals(pass)) //If user already exists.
             {
                 System.out.println("User already exists. Enter different username and password");
                 Register(in, library);
                 check = false;
             }
         }
-        if (check) {
+        if (check)  //If user doesn't already exist and details are valid.
+        {
             library.writeFile(name, pass);
             System.out.println("Registration successful\nPlease log in.");
         }

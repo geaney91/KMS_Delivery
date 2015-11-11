@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ObserverPost extends Observer {
-    public ObserverPost(Subject subject){
-        this.subject = subject;
-        this.subject.attach(this);
+    public ObserverPost(ObserverSubject observerSubject){
+        this.observerSubject = observerSubject;
+        this.observerSubject.attach(this);
     }
 
     @Override
@@ -15,7 +15,7 @@ public class ObserverPost extends Observer {
     {
         Login log = new Login();
         String user = log.getCurrentUser();
-        Date logIn = subject.getState();
+        Date logIn = observerSubject.getState();
         Library library = new Library();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         ArrayList<String> local = library.getTrackingList();

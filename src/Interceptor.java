@@ -1,5 +1,4 @@
-
 public interface Interceptor {
 
-    void Log(LogInfo c1);
+    void Log(ILogInfo c1);
 }
