@@ -5,23 +5,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Michael local on 05/11/2015.
- */
 public class DeliveryStatusCheck implements Runnable {
-
-    private Subject subject;
-    private Date login;
-    private Date current;
     private Thread t;
 
-    public DeliveryStatusCheck(Subject subject, Date login){
+    public DeliveryStatusCheck() {}
 
-        this.subject=subject;
-        this.login = login;
-    }
-
-    public void run(){
+    public void run()
+    {
         Login log = new Login();
         String user = log.getCurrentUser();
         Library library = new Library();
@@ -29,26 +19,24 @@ public class DeliveryStatusCheck implements Runnable {
 
         Date current = new Date();
         Date previous = new Date();
-        ArrayList<String> local = library.getTrackingList();
+        ArrayList<String> local = library.getTrackingList();    //Puts list of tracking details into local ArrayList
         String result = "";
-        while(true)
+        while(true) //Ensures this runs until the application is closed.
         {
-            for (int i = 0; i < local.size(); i++)
+            for (int i = 0; i < local.size(); i++)  //Iterate through list of tracking details
             {
                 String[] details = local.get(i).split(",");
-                if (details[0].equals(user))
+                if (details[0].equals(user))    //Only looks at post created by the current user
                 {
                     try
                     {
-                        Date delivery = dateFormat.parse(details[3]);
-                        //long diff1 = delivery.getTime() - login.getTime();
-                        //long diff = delivery.getTime() - current.getTime();
-                        //if (diff1 > 0 && diff < 0)
-                        if(delivery.after(previous) && current.after(delivery)){
-                            result += "" + details[1] + " delivered\n";
+                        Date delivery = dateFormat.parse(details[3]);   //Gets delivery date
+                        if(delivery.after(previous) && current.after(delivery)) //Check to see if post has been delivered in the last 10 seconds
+                        {
+                            result += "" + details[1] + " delivered\n"; //Adds to the result string
                         }
                     }
-                    catch (ParseException e)
+                    catch (ParseException e)    //Catches parsing exceptions
                     {
                         System.out.println(e.getMessage());
                     }
@@ -56,18 +44,18 @@ public class DeliveryStatusCheck implements Runnable {
             }
             if (result != "")
             {
-                JOptionPane.showMessageDialog(null, result + "");
+                JOptionPane.showMessageDialog(null, result + "");   //Pops dialogbox with post id if it has been delivered.
             }
             try
             {
-                Thread.sleep(10000);
-                previous = current;
+                previous = current; //Sets previous date to current date before resetting current date in 10 seconds.
+                Thread.sleep(10000);    //Put thread to sleep for 10 seconds
                 current = new Date();
                 result = "";
             }
-            catch (InterruptedException e)
+            catch (InterruptedException e)  //Catch if thread is interrupted
             {
-                Thread.currentThread().interrupt(); // restore interrupted status
+                Thread.currentThread().interrupt();
             }
         }
     }

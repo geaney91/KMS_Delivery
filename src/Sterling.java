@@ -1,6 +1,4 @@
-/**
- * Created by 09006819 on 05/11/2015.
- */
+
 public class Sterling implements CurrencyType{
 
     @Override

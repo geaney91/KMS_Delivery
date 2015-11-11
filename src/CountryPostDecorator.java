@@ -19,8 +19,6 @@ public class CountryPostDecorator extends PostDecorator {
 
     }
 
-
-
     @Override
     public void create(){
         decoratedPost.create();
@@ -28,9 +26,4 @@ public class CountryPostDecorator extends PostDecorator {
     }
 
 
-    //public String toString()
-    //{
-        //return this.country + decoratedPost;
-
-    //}
 }

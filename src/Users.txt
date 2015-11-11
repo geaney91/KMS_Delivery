@@ -4,4 +4,3 @@ krystian,password,6184
 user,pas,9234
 newUser,newUserPass,9100
 newUser3,newUserPass3,3267
-,,7210

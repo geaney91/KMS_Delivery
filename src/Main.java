@@ -1,5 +1,3 @@
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -42,7 +40,7 @@ public class Main {
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         dateFormat.format(logIn);
 
-        DeliveryStatusCheck ds1 = new DeliveryStatusCheck(subject,logIn);
+        DeliveryStatusCheck ds1 = new DeliveryStatusCheck();
         ds1.start();
         //Threader(subject, logIn);
 
@@ -96,7 +94,7 @@ public class Main {
                 Post countryPost = new CountryPostDecorator(post1, c);  //Decorates the object with chosen destination. Price is updated.
                 System.out.print("Enter weight in kg: (e.g 1.2) ");
                 String ws = in.nextLine();
-                if (ws.matches("-?\\d+(\\.\\d+)?") || ws.matches("\\d+"))
+                if (ws.matches("-?\\d+(\\.\\d+)?") || ws.matches("\\d+"))   //Ensure format for double or integer.
                 {
                     double w = Double.parseDouble(ws);
                     Post weightedPost = new WeightPostDecorator(countryPost, w);    //Decorates object with weight. Price is updated.
@@ -174,7 +172,6 @@ public class Main {
             System.out.println("Invalid type of post. Please enter a valid input");
             CreatePost(in, library, log);
         }
-
     }
 
     public static boolean ReturnToMenu(Scanner in)

@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -32,7 +31,6 @@ public class ObserverPost extends Observer {
                     } else {
                         System.out.println("Post Id: " + details[1] + " is due to be delivered on " + details[3]);
                     }
-                    //TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
                 } catch (ParseException e) {
                     System.out.println(e.getMessage());
                 }
