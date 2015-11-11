@@ -1,9 +1,9 @@
 import java.util.Date;
 
-public class Context {
+public class StrategyContext {
     private Strategy strategy;
 
-    public Context(Strategy strategy){
+    public StrategyContext(Strategy strategy){
         this.strategy = strategy;
     }
 

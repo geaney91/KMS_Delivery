@@ -2,7 +2,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-public class DeliveryDateStandard implements Strategy {
+public class StrategyDeliveryDateStandard implements Strategy {
     @Override
     public String DisplayDate(String country)
     {

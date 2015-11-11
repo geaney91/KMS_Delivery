@@ -1,8 +1,8 @@
-public abstract class PostDecorator implements Post {
+public abstract class DecoratorPost implements Post {
     protected Post decoratedPost = null;
     protected double price = 0.0;
 
-    public PostDecorator(Post decoratedPost)
+    public DecoratorPost(Post decoratedPost)
     {
         this.decoratedPost = decoratedPost;
     }

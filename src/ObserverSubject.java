@@ -3,7 +3,7 @@ import java.util.Date;
 import java.util.List;
 
 
-public class Subject {
+public class ObserverSubject {
     private List<Observer> observers = new ArrayList<Observer>();
     private Date state;
 

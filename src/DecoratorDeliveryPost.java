@@ -1,11 +1,10 @@
-public class DeliveryPostDecorator extends PostDecorator {
+public class DecoratorDeliveryPost extends DecoratorPost {
 
-    public DeliveryPostDecorator(Post weightedPost, String delivery){
+    public DecoratorDeliveryPost(Post weightedPost, String delivery){
         super(weightedPost);
         if (delivery.equalsIgnoreCase("standard"))
         {
             this.price = 2;
-
         }
         else if (delivery.equalsIgnoreCase("express"))
         {

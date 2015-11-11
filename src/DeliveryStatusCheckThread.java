@@ -5,19 +5,17 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * Created by Michael local on 05/11/2015.
- */
-public class DeliveryStatusCheck implements Runnable {
 
-    private Subject subject;
+public class DeliveryStatusCheckThread implements Runnable {
+
+    private ObserverSubject observerSubject;
     private Date login;
     private Date current;
     private Thread t;
 
-    public DeliveryStatusCheck(Subject subject, Date login){
+    public DeliveryStatusCheckThread(ObserverSubject observerSubject, Date login){
 
-        this.subject=subject;
+        this.observerSubject = observerSubject;
         this.login = login;
     }
 
@@ -41,9 +39,6 @@ public class DeliveryStatusCheck implements Runnable {
                     try
                     {
                         Date delivery = dateFormat.parse(details[3]);
-                        //long diff1 = delivery.getTime() - login.getTime();
-                        //long diff = delivery.getTime() - current.getTime();
-                        //if (diff1 > 0 && diff < 0)
                         if(delivery.after(previous) && current.after(delivery)){
                             result += "" + details[1] + " delivered\n";
                         }
@@ -60,8 +55,8 @@ public class DeliveryStatusCheck implements Runnable {
             }
             try
             {
-                Thread.sleep(10000);
                 previous = current;
+                Thread.sleep(10000);
                 current = new Date();
                 result = "";
             }

@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Created by sshan on 10/11/2015.
  */
-public class DeliveryDateExpress implements Strategy{
+public class StrategyDeliveryDateSuper implements Strategy{
     @Override
     public String DisplayDate(String country)
     {
@@ -21,9 +21,9 @@ public class DeliveryDateExpress implements Strategy{
         if(country.toLowerCase().equals("ireland"))
             c.add(Calendar.DATE,1);
         if(country.toLowerCase().equals("uk"))
-            c.add(Calendar.DATE,2);
+            c.add(Calendar.DATE,1);
         if(country.toLowerCase().equals("europe"))
-            c.add(Calendar.DATE,4);
+            c.add(Calendar.DATE,2);
 
   /*      switch (deliveryType.toLowerCase())
         {

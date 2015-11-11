@@ -1,12 +1,11 @@
 import java.io.IOException;
 
-public class Logger implements Interceptor  {
+public class ILogger implements Interceptor  {
 
     @Override
-    public void Log(LogInfo c1)
+    public void Log(ILogInfo c1)
     {
         String user = c1.getUser();
-        //System.out.print(user);
         Library library = new Library();
         try {
             library.writeFile(user);

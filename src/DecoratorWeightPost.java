@@ -1,7 +1,6 @@
-import java.util.*;
-public class WeightPostDecorator extends PostDecorator {
+public class DecoratorWeightPost extends DecoratorPost {
 
-   public WeightPostDecorator(Post countryPost, double w) {
+   public DecoratorWeightPost(Post countryPost, double w) {
        super(countryPost);
        this.price = w/2;
    }

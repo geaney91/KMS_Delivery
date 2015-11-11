@@ -35,18 +35,17 @@ public class Main {
     //Called on successful login.
     public static void Options(Scanner in, Library lib, Login log) throws IOException {
 
-        Subject subject = new Subject();
+        ObserverSubject observerSubject = new ObserverSubject();
         Date logIn = new Date();
         DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         dateFormat.format(logIn);
 
-        DeliveryStatusCheck ds1 = new DeliveryStatusCheck(subject,logIn);
+        DeliveryStatusCheckThread ds1 = new DeliveryStatusCheckThread(observerSubject,logIn);
         ds1.start();
-        //Threader(subject, logIn);
 
-        Logger logger = new Logger();
-        Dispatcher.register(logger);
-        ConcreteFramework cf = new ConcreteFramework();
+        ILogger ILogger = new ILogger();
+        IDispatcher.register(ILogger);
+        IConcreteFramework cf = new IConcreteFramework();
         cf.event();
 
         System.out.println("\nWould you like to create post to send or track an item you have previously created: (create or track)");
@@ -55,10 +54,10 @@ public class Main {
         {
             CreatePost(in, lib, log);
         }
-        else if (choice.toLowerCase().equals("track"))  //Updates current date in Subject to display post delivery status to user.
+        else if (choice.toLowerCase().equals("track"))  //Updates current date in ObserverSubject to display post delivery status to user.
         {
-            new ObserverPost(subject);
-            subject.setState(logIn);
+            new ObserverPost(observerSubject);
+            observerSubject.setState(logIn);
             Boolean check = ReturnToMenu(in);
             if (check)
                 Options(in, lib, log);
@@ -91,78 +90,35 @@ public class Main {
             String c = in.nextLine();
             if (c.equalsIgnoreCase("ireland") || c.equalsIgnoreCase("uk") || c.equalsIgnoreCase("europe"))
             {
-                Post countryPost = new CountryPostDecorator(post1, c);  //Decorates the object with chosen destination. Price is updated.
+                Post countryPost = new DecoratorCountryPost(post1, c);  //Decorates the object with chosen destination. Price is updated.
                 System.out.print("Enter weight in kg: (e.g 1.2) ");
                 String ws = in.nextLine();
                 if (ws.matches("-?\\d+(\\.\\d+)?") || ws.matches("\\d+"))
                 {
                     double w = Double.parseDouble(ws);
-                    Post weightedPost = new WeightPostDecorator(countryPost, w);    //Decorates object with weight. Price is updated.
+                    Post weightedPost = new DecoratorWeightPost(countryPost, w);    //Decorates object with weight. Price is updated.
 
                     System.out.print("Enter delivery type: (Standard, Express, Super)");
                     String delivery  = in.nextLine();
                     if (delivery.equalsIgnoreCase("standard") || delivery.equalsIgnoreCase("express") || delivery.equalsIgnoreCase("super"))
                     {
-                        Post deliveryPost = new DeliveryPostDecorator(weightedPost, delivery);  //Decorates object with delivery type. Price is updated.
-
-                        //System.out.println("Postage Cost: " + deliveryPost.GetPrice()); //Gets the total postage cost.
-                        CurrencyType currency = new Money();
-                        currency.accept(new CurrencyTypeDisplayVisitor(), deliveryPost.GetPrice());
+                        Post deliveryPost = new DecoratorDeliveryPost(weightedPost, delivery);  //Decorates object with delivery type. Price is updated.
+                        VCurrencyType currency = new VMoney();
+                        currency.accept(new VCurrencyTypeDisplayVisitor(), deliveryPost.GetPrice());
 
                         System.out.println("Would you like to send this post: (y, n)");
                         String send = in.nextLine();
                         if (send.equalsIgnoreCase("y"))
                         {
                             if(delivery.equalsIgnoreCase("standard")) {
-                                Context context = new Context(new DeliveryDateStandard());
-                                System.out.println("Delivery date: " + context.executeStrategy(c));
-                                String date = context.executeStrategy(c);
-                                library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
-                                System.out.println("Post sent!");
-                                Boolean check = ReturnToMenu(in);
-                                if (check)
-                                    Options(in, library, log);
-                                else if (!check)
-                                    System.exit(0);
-                                else {
-                                    System.out.println("Invalid entry. System will exit.");
-                                    System.exit(0);
-                                }
+                                Display(library, log, c, in, new StrategyDeliveryDateStandard());
                             }
-                            if(delivery.equalsIgnoreCase("express")) {
-                                Context context = new Context(new DeliveryDateExpress());
-                                System.out.println("Delivery date: " + context.executeStrategy(c));
-                                String date = context.executeStrategy(c);
-                                library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
-                                System.out.println("Post sent!");
-                                Boolean check = ReturnToMenu(in);
-                                if (check)
-                                    Options(in, library, log);
-                                else if (!check)
-                                    System.exit(0);
-                                else {
-                                    System.out.println("Invalid entry. System will exit.");
-                                    System.exit(0);
-                                }
+                            else if(delivery.equalsIgnoreCase("express")) {
+                                Display(library, log, c, in, new StrategyDeliveryDateExpress());
                             }
-                            if(delivery.equalsIgnoreCase("super")){
-                                Context context = new Context(new DeliveryDateSuper());
-                                System.out.println("Delivery date: " + context.executeStrategy(c));
-                                String date = context.executeStrategy(c);
-                                library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
-                                System.out.println("Post sent!");
-                                Boolean check = ReturnToMenu(in);
-                                if (check)
-                                    Options(in, library, log);
-                                else if (!check)
-                                    System.exit(0);
-                                else {
-                                    System.out.println("Invalid entry. System will exit.");
-                                    System.exit(0);
-                                }
+                            else if(delivery.equalsIgnoreCase("super")){
+                                Display(library, log, c, in, new StrategyDeliveryDateSuper());
                             }
-
-
                         }
                         else if (send.equalsIgnoreCase("n"))
                         {
@@ -208,6 +164,24 @@ public class Main {
             CreatePost(in, library, log);
         }
 
+    }
+
+    public static void Display(Library library, Login log, String c, Scanner in, Strategy s) throws IOException
+    {
+        StrategyContext strategyContext = new StrategyContext(s);
+        System.out.println("Delivery date: " + strategyContext.executeStrategy(c));
+        String date = strategyContext.executeStrategy(c);
+        library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
+        System.out.println("Post sent!");
+        Boolean check = ReturnToMenu(in);
+        if (check)
+            Options(in, library, log);
+        else if (!check)
+            System.exit(0);
+        else {
+            System.out.println("Invalid entry. System will exit.");
+            System.exit(0);
+        }
     }
 
     public static boolean ReturnToMenu(Scanner in)

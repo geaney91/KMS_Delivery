@@ -1,9 +1,9 @@
 
-public class LogInfo {
+public class ILogInfo {
 
     private String user;
 
-    LogInfo()
+    ILogInfo()
     {
         Login log = new Login();
         user = log.getCurrentUser();

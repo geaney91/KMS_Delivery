@@ -1,12 +1,11 @@
 
-public class CountryPostDecorator extends PostDecorator {
+public class DecoratorCountryPost extends DecoratorPost {
 
-    public CountryPostDecorator(Post post1, String country){
+    public DecoratorCountryPost(Post post1, String country){
         super(post1);
         if (country.equalsIgnoreCase("ireland"))
         {
             this.price = 1;
-
         }
         else if (country.equalsIgnoreCase("uk"))
         {
@@ -16,21 +15,11 @@ public class CountryPostDecorator extends PostDecorator {
         {
             this.price = 3;
         }
-
     }
-
-
 
     @Override
     public void create(){
         decoratedPost.create();
-
     }
 
-
-    //public String toString()
-    //{
-        //return this.country + decoratedPost;
-
-    //}
 }
