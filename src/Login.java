@@ -55,8 +55,27 @@ public class Login {
         String name = in.nextLine();
         System.out.print("Enter password:");
         String pass = in.nextLine();
-
-        library.writeFile(name, pass);
-        System.out.println("Registration successful\nPlease log in.");
+        ArrayList<String> localList = library.getLoginList();
+        boolean check = true;
+        if (name.isEmpty() || pass.isEmpty())
+        {
+            System.out.println("Can't be blank. Enter different username and password");
+            Register(in, library);
+            check = false;
+        }
+        for (int i = 0; i < localList.size() && check; i++)
+        {
+            String[] details = localList.get(i).split(",");
+            if (details[0].equals(name) && details[1].equals(pass))
+            {
+                System.out.println("User already exists. Enter different username and password");
+                Register(in, library);
+                check = false;
+            }
+        }
+        if (check) {
+            library.writeFile(name, pass);
+            System.out.println("Registration successful\nPlease log in.");
+        }
     }
 }

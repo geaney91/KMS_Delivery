@@ -1,5 +1,3 @@
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -33,26 +31,6 @@ public class Main {
         Options(in, lib, log);
     }
 
-    public static void Threader(Subject subject, Date logIn)
-    {
-        DeliveryStatusCheck ds1 = new DeliveryStatusCheck(subject,logIn);
-
-        //t1.start();
-
-        //ScheduledExecutorService scheduledThreadPool = Executors.newScheduledThreadPool(5);
-
-
-        //schedule to run after sometime
-        //System.out.println("Current Time = "+new Date());
-        //change for loop to if statement to check if a change occurs if not recheck track
-        while (true) {
-
-
-            //Thread t1 = new Thread(ds1);
-            ds1.start();
-            //scheduledThreadPool.schedule(t1, 10, TimeUnit.SECONDS);
-        }
-    }
 
     //Called on successful login.
     public static void Options(Scanner in, Library lib, Login log) throws IOException {
@@ -81,6 +59,21 @@ public class Main {
         {
             new ObserverPost(subject);
             subject.setState(logIn);
+            Boolean check = ReturnToMenu(in);
+            if (check)
+                Options(in, lib, log);
+            else if (!check)
+                System.exit(0);
+            else
+            {
+                System.out.println("Invalid entry. System will exit.");
+                System.exit(0);
+            }
+        }
+        else
+        {
+            System.out.println("Invalid entry");
+            Options(in, lib, log);
         }
 
     }
@@ -120,21 +113,56 @@ public class Main {
                         String send = in.nextLine();
                         if (send.equalsIgnoreCase("y"))
                         {
-                            Context context = new Context(new DeliveryDate());
-                            System.out.println("Delivery date: " + context.executeStrategy(delivery, c));
-                            String date = context.executeStrategy(delivery, c);
-                            library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
-                            System.out.println("Post sent!");
-                            Boolean check = ReturnToMenu(in);
-                            if (check)
-                                Options(in, library, log);
-                            else if (!check)
-                                System.exit(0);
-                            else
-                            {
-                                System.out.println("Invalid entry. System will exit.");
-                                System.exit(0);
+                            if(delivery.equalsIgnoreCase("standard")) {
+                                Context context = new Context(new DeliveryDateStandard());
+                                System.out.println("Delivery date: " + context.executeStrategy(c));
+                                String date = context.executeStrategy(c);
+                                library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
+                                System.out.println("Post sent!");
+                                Boolean check = ReturnToMenu(in);
+                                if (check)
+                                    Options(in, library, log);
+                                else if (!check)
+                                    System.exit(0);
+                                else {
+                                    System.out.println("Invalid entry. System will exit.");
+                                    System.exit(0);
+                                }
                             }
+                            if(delivery.equalsIgnoreCase("express")) {
+                                Context context = new Context(new DeliveryDateExpress());
+                                System.out.println("Delivery date: " + context.executeStrategy(c));
+                                String date = context.executeStrategy(c);
+                                library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
+                                System.out.println("Post sent!");
+                                Boolean check = ReturnToMenu(in);
+                                if (check)
+                                    Options(in, library, log);
+                                else if (!check)
+                                    System.exit(0);
+                                else {
+                                    System.out.println("Invalid entry. System will exit.");
+                                    System.exit(0);
+                                }
+                            }
+                            if(delivery.equalsIgnoreCase("super")){
+                                Context context = new Context(new DeliveryDateSuper());
+                                System.out.println("Delivery date: " + context.executeStrategy(c));
+                                String date = context.executeStrategy(c);
+                                library.writeFile(log.getCurrentUser(), log.getCurrentId(), date);  //Sends details to writeFile method to be written to PostTracking file.
+                                System.out.println("Post sent!");
+                                Boolean check = ReturnToMenu(in);
+                                if (check)
+                                    Options(in, library, log);
+                                else if (!check)
+                                    System.exit(0);
+                                else {
+                                    System.out.println("Invalid entry. System will exit.");
+                                    System.exit(0);
+                                }
+                            }
+
+
                         }
                         else if (send.equalsIgnoreCase("n"))
                         {
@@ -199,5 +227,4 @@ public class Main {
             check = null;
         return check;
     }
-
 }

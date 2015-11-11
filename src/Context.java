@@ -7,7 +7,7 @@ public class Context {
         this.strategy = strategy;
     }
 
-    public String executeStrategy(String deliveryType, String country){
-        return strategy.DisplayDate(deliveryType, country);
+    public String executeStrategy(String country){
+        return strategy.DisplayDate(country);
     }
 }
